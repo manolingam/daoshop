@@ -203,8 +203,6 @@ class Form extends React.Component {
             }),
         });
 
-        // console.log(result);
-
         this.setState({
             booking_confirmed: true,
             initiated_transaction: false,
