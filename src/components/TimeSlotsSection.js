@@ -80,9 +80,9 @@ class TimeSlotSection extends Component {
                         type='submit'
                         onClick={() => this.props.validateData()}
                     >
-                        Pay 0.5 DAI & Submit
+                        Pay 200 DAI & Submit
                     </button>
-                ) : networkID !== "42" ? (
+                ) : networkID !== "1" ? (
                     <p
                         style={{
                             height: "50px",
@@ -90,7 +90,7 @@ class TimeSlotSection extends Component {
                             fontSize: "35px",
                         }}
                     >
-                        Switch to Kovan!
+                        Switch to Mainnet!
                     </p>
                 ) : (
                     <div>
