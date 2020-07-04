@@ -171,16 +171,8 @@ class Form extends React.Component {
         });
     };
 
-    submitData = async () => {
-        let skills_required = [];
-
-        for (var key in this.state.skills_required) {
-            if (this.state.skills_required[key]) {
-                skills_required.push(key);
-            }
-        }
-
-        await fetch("https://guild-keeper.herokuapp.com/daoshop", {
+    submitData = async (skills_required) => {
+        await fetch("https://guild-keeper.herokuapp.com/daoshop/airtable", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -209,12 +201,34 @@ class Form extends React.Component {
         });
     };
 
-    startTransaction = async () => {
+    startTransaction = async (skills_required) => {
         const DAI = new this.state.web3.eth.Contract(
             DAI_ABI,
             DAI_CONTRACT_ADDRESS
         );
         try {
+            fetch("https://guild-keeper.herokuapp.com/daoshop/mongo", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    project_name: this.state.project_name,
+                    summary: this.state.summary,
+                    skills_needed: skills_required,
+                    specs: this.state.specs,
+                    name: this.state.name,
+                    email: this.state.email,
+                    handle: this.state.handle,
+                    about_guild: this.state.about_guild,
+                    to_know: this.state.to_know,
+                    slot_1: this.state.slot_1,
+                    slot_2: this.state.slot_2,
+                    slot_3: this.state.slot_3,
+                }),
+            });
+
             let result = await DAI.methods
                 .transfer(
                     "0xbeb3e32355a933501c247e2dbde6e6ca2489bf3d",
@@ -231,7 +245,7 @@ class Form extends React.Component {
                     transaction_hash: result.transactionHash,
                 },
                 () => {
-                    this.submitData();
+                    this.submitData(skills_required);
                 }
             );
         } catch (err) {
@@ -242,7 +256,7 @@ class Form extends React.Component {
         }
     };
 
-    initTransaction = async () => {
+    initTransaction = async (skills_required) => {
         if (typeof window.ethereum !== "undefined") {
             const web3 = new Web3(window.ethereum);
             const accounts = await window.ethereum.enable();
@@ -252,7 +266,9 @@ class Form extends React.Component {
             this.setState(
                 { web3, accounts, networkID, initiated_transaction: true },
                 () => {
-                    return networkID === "42" ? this.startTransaction() : null;
+                    return networkID === "42"
+                        ? this.startTransaction(skills_required)
+                        : null;
                 }
             );
 
@@ -275,6 +291,14 @@ class Form extends React.Component {
     };
 
     validateData = () => {
+        let skills_required = [];
+
+        for (var key in this.state.skills_required) {
+            if (this.state.skills_required[key]) {
+                skills_required.push(key);
+            }
+        }
+
         let { summary, email, slot_1, slot_2, slot_3 } = this.state;
         let pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -309,7 +333,9 @@ class Form extends React.Component {
             return this.setState({ slot_3_focus: true });
         }
 
-        this.setState({ slot_3_focus: false }, () => this.initTransaction());
+        this.setState({ slot_3_focus: false }, () =>
+            this.initTransaction(skills_required)
+        );
     };
 
     render() {
