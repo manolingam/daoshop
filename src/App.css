@@ -155,6 +155,19 @@ svg {
     max-width: 120px;
 }
 
+df-messenger {
+    --df-messenger-bot-message: #ff3864;
+    --df-messenger-button-titlebar-color: black;
+    --df-messenger-chat-background-color: #fafafa;
+    --df-messenger-font-color: white;
+    --df-messenger-send-icon: #ff3864;
+    --df-messenger-user-message: black;
+}
+
+.df-messenger-wrapper {
+    font-family: "Mirza", cursive;
+}
+
 @media only screen and (max-width: 1000px) {
     .main {
         flex-direction: column;
