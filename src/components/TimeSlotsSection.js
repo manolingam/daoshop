@@ -82,7 +82,7 @@ class TimeSlotSection extends Component {
                     >
                         Pay 200 DAI & Submit
                     </button>
-                ) : networkID !== "1" ? (
+                ) : networkID !== "42" ? (
                     <p
                         style={{
                             height: "50px",
