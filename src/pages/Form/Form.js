@@ -172,7 +172,7 @@ class Form extends React.Component {
     };
 
     submitData = async (skills_required) => {
-        await fetch("https://guild-keeper.herokuapp.com/daoshop/airtable", {
+        await fetch("https://guild-keeper.herokuapp.com/daoshop/mongo", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -199,15 +199,9 @@ class Form extends React.Component {
             booking_confirmed: true,
             initiated_transaction: false,
         });
-    };
 
-    startTransaction = async (skills_required) => {
-        const DAI = new this.state.web3.eth.Contract(
-            DAI_ABI,
-            DAI_CONTRACT_ADDRESS
-        );
         try {
-            fetch("https://guild-keeper.herokuapp.com/daoshop/mongo", {
+            await fetch("https://guild-keeper.herokuapp.com/daoshop/airtable", {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
@@ -226,28 +220,36 @@ class Form extends React.Component {
                     slot_1: this.state.slot_1,
                     slot_2: this.state.slot_2,
                     slot_3: this.state.slot_3,
+                    transaction_hash: this.state.transaction_hash,
                 }),
             });
+        } catch (err) {}
+    };
 
-            let result = await DAI.methods
+    startTransaction = async (skills_required) => {
+        const DAI = new this.state.web3.eth.Contract(
+            DAI_ABI,
+            DAI_CONTRACT_ADDRESS
+        );
+        try {
+            await DAI.methods
                 .transfer(
                     "0xbeb3e32355a933501c247e2dbde6e6ca2489bf3d",
                     this.state.web3.utils.toWei("200")
                 )
                 .send({
                     from: this.state.accounts[0],
-                    gasLimit: this.state.web3.utils.toHex(150000),
-                    gasPrice: this.state.web3.utils.toHex(20000000000),
+                })
+                .once("transactionHash", async (hash) => {
+                    this.setState(
+                        {
+                            transaction_hash: hash,
+                        },
+                        () => {
+                            this.submitData(skills_required);
+                        }
+                    );
                 });
-
-            this.setState(
-                {
-                    transaction_hash: result.transactionHash,
-                },
-                () => {
-                    this.submitData(skills_required);
-                }
-            );
         } catch (err) {
             this.setState({
                 initiated_transaction: false,
@@ -355,7 +357,7 @@ class Form extends React.Component {
         return (
             <ThemeProvider theme={THEME}>
                 {booking_confirmed ? (
-                    <SuccessComponent />
+                    <SuccessComponent hash={this.state.transaction_hash} />
                 ) : (
                     <div className='form'>
                         <DisclaimerSection />
@@ -371,6 +373,7 @@ class Form extends React.Component {
                                 />
                             ) : (
                                 <TextFieldSection
+                                    key={index}
                                     state_name={field.state_name}
                                     id={
                                         field.label === "Brief Summary"
