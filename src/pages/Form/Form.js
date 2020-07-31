@@ -67,12 +67,12 @@ const THEME = createMuiTheme({
 });
 
 //MAINNET
-// const DAI_CONTRACT_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
-// const DAI_ABI = require("../../utils/DaiABI.json");
+const DAI_CONTRACT_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
+const DAI_ABI = require("../../utils/DaiABI.json");
 
 // KOVAN TESTNET
-const DAI_CONTRACT_ADDRESS = "0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa";
-const DAI_ABI = require("../../utils/DaiABI.json");
+// const DAI_CONTRACT_ADDRESS = "0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa";
+// const DAI_ABI = require("../../utils/DaiABI.json");
 
 class Form extends React.Component {
     state = {
@@ -235,12 +235,10 @@ class Form extends React.Component {
             await DAI.methods
                 .transfer(
                     "0xbeb3e32355a933501c247e2dbde6e6ca2489bf3d",
-                    this.state.web3.utils.toWei("0.1")
+                    this.state.web3.utils.toWei("200")
                 )
                 .send({
                     from: this.state.accounts[0],
-                    gasLimit: this.state.web3.utils.toHex(150000),
-                    gasPrice: this.state.web3.utils.toHex(20000000000),
                 })
                 .once("transactionHash", async (hash) => {
                     this.setState(
@@ -270,7 +268,7 @@ class Form extends React.Component {
             this.setState(
                 { web3, accounts, networkID, initiated_transaction: true },
                 () => {
-                    return networkID === "42"
+                    return networkID === "1"
                         ? this.startTransaction(skills_required)
                         : null;
                 }
