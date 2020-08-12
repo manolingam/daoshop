@@ -80,7 +80,7 @@ class TimeSlotSection extends Component {
                         type='submit'
                         onClick={() => this.props.validateData()}
                     >
-                        Pay 200 DAI & Submit
+                        Pay 300 DAI & Submit
                     </button>
                 ) : networkID !== "1" ? (
                     <p
