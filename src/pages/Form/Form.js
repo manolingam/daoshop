@@ -235,7 +235,7 @@ class Form extends React.Component {
             await DAI.methods
                 .transfer(
                     "0xbeb3e32355a933501c247e2dbde6e6ca2489bf3d",
-                    this.state.web3.utils.toWei("200")
+                    this.state.web3.utils.toWei("300")
                 )
                 .send({
                     from: this.state.accounts[0],
