@@ -362,7 +362,7 @@ class Form extends React.Component {
                     <SuccessComponent hash={this.state.transaction_hash} />
                 ) : (
                     <div className='form'>
-                        <DisclaimerSection />
+                        {/* <DisclaimerSection /> */}
 
                         {TEXT_FIELD_PROPS.map((field, index) => {
                             return field.label === "Skills Needed" ? (
