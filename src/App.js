@@ -5,16 +5,14 @@ import Form from "./pages/Form/Form";
 
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 
-import "./App.css";
-
 function App() {
     return (
         <Router>
             <Switch>
-                <Route exact path='/'>
+                <Route exact path="/">
                     <Home />
                 </Route>
-                <Route exact path='/consult'>
+                <Route exact path="/consult">
                     <Form />
                 </Route>
             </Switch>
