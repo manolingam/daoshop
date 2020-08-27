@@ -296,6 +296,11 @@ class Form extends React.Component {
     };
 
     validateData = () => {
+        ReactGA.event({
+            category: "Pay",
+            action: "Action to pay for consultation",
+        });
+
         let skills_required = [];
 
         for (var key in this.state.skills_required) {

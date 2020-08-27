@@ -20,6 +20,15 @@ function Home(props) {
         ReactGA.initialize(process.env.REACT_APP_GA_ID);
         ReactGA.pageview(window.location.pathname);
     }, []);
+
+    const onConsultClickHandler = () => {
+        ReactGA.event({
+            category: "Consult",
+            action: "Action to fill up the form",
+        });
+        props.history.push("/consult");
+    };
+
     return (
         <Main>
             <Container1>
@@ -34,9 +43,7 @@ function Home(props) {
                         you define your goals, design your DAO, and deploy it
                         into the wild!
                     </p>
-                    <ConsultButton
-                        onClick={() => props.history.push("/consult")}
-                    >
+                    <ConsultButton onClick={onConsultClickHandler}>
                         Book a DAO consultation
                     </ConsultButton>
                 </SubContainer1>
