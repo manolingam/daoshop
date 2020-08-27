@@ -6,7 +6,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import Snackbar from "@material-ui/core/Snackbar";
 
-import DisclaimerSection from "../../components/DisclaimerSection";
+// import DisclaimerSection from "../../components/DisclaimerSection";
 import TextFieldSection from "../../components/TextFieldSection";
 import CheckBoxSection from "../../components/CheckBoxSection";
 import TimeSlotSection from "../../components/TimeSlotsSection";
@@ -304,7 +304,7 @@ class Form extends React.Component {
         }
 
         let { summary, email, slot_1, slot_2, slot_3 } = this.state;
-        let pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         if (!summary) {
             return (window.location.href = "#2");
@@ -361,7 +361,7 @@ class Form extends React.Component {
                 {booking_confirmed ? (
                     <SuccessComponent hash={this.state.transaction_hash} />
                 ) : (
-                    <div className='form'>
+                    <div className="form">
                         {/* <DisclaimerSection /> */}
 
                         {TEXT_FIELD_PROPS.map((field, index) => {
