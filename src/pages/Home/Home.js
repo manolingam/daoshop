@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
+import ReactGA from "react-ga";
 
 import {
     Main,
@@ -15,6 +16,10 @@ import {
 import raidBrand from "../../assets/raidguild__logo.png";
 
 function Home(props) {
+    useEffect(() => {
+        ReactGA.initialize(process.env.REACT_APP_GA_ID);
+        ReactGA.pageview(window.location.pathname);
+    }, []);
     return (
         <Main>
             <Container1>

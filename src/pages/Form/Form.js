@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from "react-ga";
 
 import Web3 from "web3";
 
@@ -341,6 +342,10 @@ class Form extends React.Component {
             this.initTransaction(skills_required)
         );
     };
+
+    componentDidMount() {
+        ReactGA.pageview(window.location.pathname);
+    }
 
     render() {
         let {
